@@ -988,6 +988,13 @@ footer {
   <div class="shop-content" id="shopContent"></div>
 
   <footer style="margin-top:0;">
+    <div style="text-align: center; margin-top: 20px;">
+      <p>Vous pouvez nous rejoindre sur Discord :</p>
+      <a href="https://discord.gg/C6pQhUwPVd" target="_blank" class="discord-btn">
+        <img src="discord-logo-discord-icon-transparent-free-png.png" alt="Discord Logo" class="discord-logo" height="100">
+        
+      </a>
+    </div>
     <div class="footer-bottom" style="padding:20px 48px;border-top:1px solid var(--border);justify-content:center;color:var(--text-muted)">
       © 2026 Tropical Heights · By sully
     </div>
@@ -1015,16 +1022,16 @@ footer {
       <div class="form-2col">
         <div class="form-group">
           <label class="form-label">Nom & Prénom <span>*</span></label>
-          <input type="text" class="form-input" id="r_name" required placeholder="Jean Dupont">
+          <input type="text" class="form-input" id="r_name" required placeholder="Kain Tejada">
         </div>
         <div class="form-group">
           <label class="form-label">Âge <span>*</span></label>
-          <input type="number" class="form-input" id="r_age" required placeholder="25" min="18">
+          <input type="number" class="form-input" id="r_age" required placeholder="38" min="18">
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">Numéro de téléphone <span>*</span></label>
-        <input type="text" class="form-input" id="r_phone" required placeholder="+1 (555) 000-0000">
+        <input type="text" class="form-input" id="r_phone" required placeholder="000-0000">
       </div>
       <div class="form-group">
         <label class="form-label">Expérience dans le commerce ? <span>*</span></label>
@@ -1071,6 +1078,7 @@ footer {
           <option value="Vierge">Casier vierge</option>
           <option value="Léger">Antécédents légers</option>
           <option value="Chargé">Antécédents chargés</option>
+          <option value="Crime">Antécédents crimes</option>
         </select>
       </div>
       <button type="submit" class="btn-full" id="recruitBtn">
@@ -1170,8 +1178,8 @@ footer {
       <button class="admin-nav-item" onclick="showAdminSection('applications', this)"><span class="nav-icon">👔</span>Candidatures</button>
       <button class="admin-nav-item" onclick="showAdminSection('messages', this)"><span class="nav-icon">💬</span>Messages Support</button>
       <button class="admin-nav-item" onclick="showAdminSection('promos', this)"><span class="nav-icon">🏷️</span>Codes Promo</button>
-      <button class="admin-nav-item" style="margin-top:auto;color:#ff4444;" onclick="adminLogout()"><span class="nav-icon">🚪</span>Déconnexion</button>
-      <button class="admin-nav-item" style="color:rgba(255,100,100,0.5);font-size:0.8rem;" onclick="resetAllData()"><span class="nav-icon">🔄</span>Réinitialiser données</button>
+      <button class="admin-nav-item" style="margin-top:auto;color:#ff8800;" onclick="adminLogout()"><span class="nav-icon">🚪</span>Déconnexion</button>
+      <button class="admin-nav-item" style="color:rgb(255, 0, 0);font-size:0.8rem;" onclick="resetAllData()"><span class="nav-icon">🔄</span>Réinitialiser données</button>
     </div>
     <div class="admin-main">
       <!-- Dashboard -->
@@ -1712,7 +1720,7 @@ function getCheckoutForm() {
   return `
     <div class="form-group">
       <label class="form-label">Nom du client <span>*</span></label>
-      <input type="text" class="form-input" id="c_name" required placeholder="Jean Dupont">
+      <input type="text" class="form-input" id="c_name" required placeholder="Kain Tejada">
     </div>
     <div class="form-group">
       <label class="form-label">Nom de l'entreprise</label>
@@ -1720,7 +1728,7 @@ function getCheckoutForm() {
     </div>
     <div class="form-group">
       <label class="form-label">Numéro de téléphone <span>*</span></label>
-      <input type="text" class="form-input" id="c_phone" required placeholder="+1 (555) 000-0000">
+      <input type="text" class="form-input" id="c_phone" required placeholder="000-0000">
     </div>
     <div class="form-group">
       <label class="form-label">Date de livraison souhaitée <span>*</span></label>

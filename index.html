@@ -1123,8 +1123,8 @@ footer {
       <h3>💬 Envoyer un message</h3>
       <form id="supportForm" onsubmit="submitSupport(event)">
         <div class="form-group">
-          <label class="form-label">Votre nom <span style="color:var(--pink)">*</span></label>
-          <input type="text" class="form-input" id="s_name" required placeholder="Jean Dupont">
+          <label class="form-label">Numero Téléphone <span style="color:var(--pink)">*</span></label>
+          <input type="text" class="form-input" id="s_name" required placeholder="5555555">
         </div>
         <div class="form-group">
           <label class="form-label">Sujet <span style="color:var(--pink)">*</span></label>
@@ -1574,7 +1574,7 @@ function renderProducts(cat) {
               <div class="product-desc">${p.desc}</div>
               <div class="product-footer">
                 <span class="product-price">$${p.price.toFixed(2)}</span>
-                <button class="btn-add" onclick="addToCart(${p.id})">+ Ajouter</button>
+                <button class="btn-add" onclick="addToCart('${p.id}')">+ Ajouter</button>
               </div>
             </div>
           </div>
@@ -1603,28 +1603,58 @@ function getGrad(cat) {
 // CART
 // ============================
 function addToCart(productId) {
-  const prod = products.find(p=>p.id===productId);
-  if(!prod) return;
-  const existing = cart.find(c=>c.id===productId);
-  if(existing) existing.qty++;
-  else cart.push({id:prod.id, name:prod.name, price:prod.price, qty:1, emoji:prod.emoji});
-  lsSet('cart', cart);
-  updateCartUI();
-  showToast('success','🛒','<b>' + prod.name + '</b> ajouté au panier !');
+    // 1. Trouver le produit dans la liste globale
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    // 2. Vérifier si le produit est déjà dans le panier
+    const existing = cart.find(item => item.id === productId);
+
+    if (existing) {
+        existing.qty++;
+    } else {
+        // Ajouter le produit avec une quantité initiale de 1
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            emoji: product.emoji,
+            qty: 1
+        });
+    }
+
+    // 3. Sauvegarder et mettre à jour l'interface
+    lsSet('cart', cart);
+    updateCartUI();
+    
+    // Optionnel : Notification visuelle
+    showToast('success', '🛒', `${product.name} ajouté au panier !`);
 }
 
 function removeFromCart(id) {
-  cart = cart.filter(c=>c.id!==id);
+  // On filtre le panier pour enlever l'article correspondant
+  cart = cart.filter(item => item.id !== id);
+  
+  // On sauvegarde le nouveau panier dans le stockage local
   lsSet('cart', cart);
+  
+  // On met à jour l'affichage
   updateCartUI();
+  
+  showToast('info', '🗑', 'Article retiré du panier');
 }
 
 function changeQty(id, delta) {
-  const item = cart.find(c=>c.id===id);
-  if(!item) return;
-  item.qty += delta;
-  if(item.qty <= 0) removeFromCart(id);
-  else { lsSet('cart', cart); updateCartUI(); }
+  const item = cart.find(i => i.id === id);
+  if (item) {
+    item.qty += delta;
+    if (item.qty <= 0) {
+      removeFromCart(id);
+    } else {
+      lsSet('cart', cart);
+      updateCartUI();
+    }
+  }
 }
 
 function updateCartUI() {
@@ -1647,11 +1677,13 @@ function updateCartUI() {
         <div class="cart-item-price">$${(item.price*item.qty).toFixed(2)} <span style="color:var(--text-muted);font-weight:400;font-size:0.8rem">($${item.price.toFixed(2)}/u)</span></div>
       </div>
       <div class="cart-qty">
-        <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
-        <span class="qty-num">${item.qty}</span>
-        <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
+
+<span class="qty-num">${item.qty}</span>
+
+<button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
       </div>
-      <button class="cart-remove" onclick="removeFromCart(${item.id})" title="Supprimer">🗑</button>
+      <button class="cart-remove" onclick="removeFromCart('${item.id}')" title="Supprimer">🗑</button>
     </div>
   `).join('');
 }
